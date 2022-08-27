@@ -23,7 +23,7 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({ data, className = ''
 
   const onChange = () => !isInputFocused && setIsInputFocused(true);
 
-  const { setDirectly, ...autocompleteState } = useInput('', {
+  const [autocompleteState, { setDirectly }] = useInput('', {
     onChangeSideEffect: onChange,
   });
   const filtered = data.filter(({ label }) => label.toLowerCase().includes(autocompleteState.value.toLowerCase()));

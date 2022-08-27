@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Title } from 'components/Title/Title';
-import CityInfoForm from 'components/CityInfo/CityInfo';
+import CityInfoForm from 'components/CityInfoForm/CityInfoForm';
 
-import { ICityInfoForm } from 'components/CityInfo';
+import { ICityInfoForm } from 'components/CityInfoForm';
 import { PageParams } from 'types/page-params';
 import { mocked_cities } from '../../MOCK/cities';
 

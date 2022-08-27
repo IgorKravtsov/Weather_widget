@@ -1,21 +1,42 @@
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 export interface IUseInputConfig {
   onChangeSideEffect?: (...params: any) => void;
   paramsChangeSideEffect?: any;
 }
 
-export const useInput = (initialValue: string, config?: IUseInputConfig) => {
-  const [value, setValue] = useState(initialValue);
+export type IInputInteraction = {
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onBlur: () => void;
+};
 
-  const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+export type IInputAdditional = {
+  setDirectly: (val: string) => void;
+  isDirty: boolean;
+};
+
+export type IUseInputResult = IInputInteraction & IInputAdditional;
+
+export const useInput = (initialValue: string, config?: IUseInputConfig): [IInputInteraction, IInputAdditional] => {
+  const [value, setValue] = useState(initialValue);
+  const [isDirty, setIsDirty] = useState(false);
+
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
     config?.onChangeSideEffect && config.onChangeSideEffect(config.paramsChangeSideEffect);
-  }, []);
+  };
 
-  const setDirectly = useCallback((val: string) => {
+  const onBlur = () => {
+    setIsDirty(true);
+  };
+
+  const setDirectly = (val: string) => {
     setValue(val);
-  }, []);
+  };
 
-  return { value, onChange, setDirectly };
+  return [
+    { value, onChange, onBlur },
+    { setDirectly, isDirty },
+  ];
 };

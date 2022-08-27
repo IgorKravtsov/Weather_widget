@@ -1,13 +1,22 @@
 import React, { useCallback } from 'react';
 
-import { Title } from 'components/Title/Title';
-import CityInfoForm from 'components/CityInfo/CityInfo';
+import { generateRandomId } from 'utils';
+import { storageManager } from 'packages/storage-manager';
 
-import { ICityInfoForm } from 'components/CityInfo';
+import { ICity } from 'types';
+import { ICityInfoForm } from 'components/CityInfoForm';
+
+import { Title } from 'components/Title/Title';
+import CityInfoForm from 'components/CityInfoForm/CityInfoForm';
 
 const CreateCity: React.FC = () => {
   const handleSubmit = useCallback((data: ICityInfoForm) => {
-    console.log(data);
+    const city: ICity = { ...data, id: generateRandomId() };
+    try {
+      storageManager.save(city);
+    } catch (e) {
+      console.error('ERROR');
+    }
   }, []);
 
   return (

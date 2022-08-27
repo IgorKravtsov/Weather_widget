@@ -1,3 +1,3 @@
 export const generateRandomId = (): string => {
-  return `wotj wiqt wqrwq ${Date.now().toFixed(2)}`;
+  return Math.random().toString(36).slice(2, 7);
 };

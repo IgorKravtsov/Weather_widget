@@ -19,6 +19,10 @@ export class LocalStorageManager implements IStorageManager {
 
   save(city: ICity): void {
     const cities = this.getAll();
+    const existedCity = cities.find((c) => c.name === city.name);
+    if (existedCity) {
+      throw Error(`City with name ${existedCity.name} already exists`);
+    }
     cities.push(city);
     localStorage.setItem(LocalstorageKey.cities, JSON.stringify(cities));
   }
