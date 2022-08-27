@@ -13,7 +13,7 @@ interface AutocompleteProps {
   actionLinks?: IActionLink[];
   className?: string;
   onEditClick?: (...params: any[]) => void;
-  onDeletedClick?: (...params: any[]) => void;
+  onDeleteClick?: (...params: any[]) => void;
 }
 
 export const Autocomplete: React.FC<AutocompleteProps> = ({ data, className = '', ...props }) => {

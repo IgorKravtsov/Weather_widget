@@ -6,8 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { Search } from '../Search/Search';
 
 import { mocked_cities } from 'MOCK/cities';
-import { Autocomplete, IActionLink } from 'components/Autocomplete';
+import { Autocomplete, IActionLink, IAutocompleteOption } from 'components/Autocomplete';
 import { RouteName } from 'routes';
+import { ICity } from 'types';
+
+type ICityOption = ICity & IAutocompleteOption;
 
 export const Dropdown: React.FC = () => {
   const data = mocked_cities.map((c) => ({ ...c, label: c.name }));
@@ -15,12 +18,12 @@ export const Dropdown: React.FC = () => {
   const actionLinks: IActionLink[] = [
     {
       title: 'Create city',
-      action: () => navigate(RouteName.CreateCity),
+      action: () => navigate(RouteName.CityInfo),
     },
   ];
 
-  const handleEdit = () => {
-    console.log('edit');
+  const handleEdit = (city: ICityOption) => {
+    navigate(`${RouteName.CityInfo}/${city.id}`);
   };
 
   const handleDelete = () => {
@@ -34,7 +37,7 @@ export const Dropdown: React.FC = () => {
         actionLinks={actionLinks}
         className={styles.dropdown}
         onEditClick={handleEdit}
-        onDeletedClick={handleDelete}
+        onDeleteClick={handleDelete}
       />
       <Search />
     </div>

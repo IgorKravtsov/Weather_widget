@@ -1,10 +1,21 @@
 .btn {
-  background-color: var(--secondary-text-color);
+  background-color: var(--main-background-color);
   border: none;
   transition: .2s all;
+  border-radius: 4px;
+  padding: 8px 35px;
+  color: #FFF;
 
   &:active {
     transform: scale(0.98);
     box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
   }
+}
+
+.danger {
+  background-color: var(--main-danger-color);
+}
+
+.secondary {
+  background-color: var(--main-secondary-color);
 }

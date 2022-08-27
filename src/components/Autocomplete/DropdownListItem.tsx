@@ -8,11 +8,10 @@ import { ReactComponent as EditIcon } from 'assets/images/edit-icon.svg';
 
 interface DropdownListItemProps {
   item: IAutocompleteOption;
-  // handleFocus: (focused: boolean) => void;
   inneroOnClick?: (value: IAutocompleteOption) => void;
   userClick?: (key: IAutocompleteOption) => void;
-  onEditClick?: (...params: any[]) => void;
-  onDeletedClick?: (...params: any[]) => void;
+  onEditClick?: (item: IAutocompleteOption) => void;
+  onDeleteClick?: (item: IAutocompleteOption) => void;
 }
 
 export const DropdownListItem: React.FC<DropdownListItemProps> = ({
@@ -20,7 +19,7 @@ export const DropdownListItem: React.FC<DropdownListItemProps> = ({
   inneroOnClick,
   userClick,
   onEditClick,
-  onDeletedClick,
+  onDeleteClick,
 }) => {
   const onListClick = userClick ?? inneroOnClick;
   const handleClick = () => {
@@ -33,6 +32,11 @@ export const DropdownListItem: React.FC<DropdownListItemProps> = ({
     }
   };
 
+  const onClick = (e: React.MouseEvent, fn: typeof onEditClick) => {
+    e.preventDefault();
+    fn && fn(item);
+  };
+
   return (
     <li
       className={styles.item}
@@ -43,11 +47,11 @@ export const DropdownListItem: React.FC<DropdownListItemProps> = ({
         {item.label}
       </p>
       <ul className={styles.btnwrapper}>
-        <li style={{ width: '20px', height: '20px', marginRight: '10px' }}>
-          <IconButton icon={<EditIcon width={'100%'} height={'100%'} />} onClick={onEditClick} />
+        <li className={styles.iconbtn}>
+          <IconButton icon={<EditIcon width={'100%'} height={'100%'} />} onClick={(e) => onClick(e, onEditClick)} />
         </li>
-        <li style={{ width: '20px', height: '20px' }}>
-          <IconButton icon={<DeleteIcon width={'100%'} height={'100%'} />} onClick={onDeletedClick} />
+        <li className={styles.iconbtn}>
+          <IconButton icon={<DeleteIcon width={'100%'} height={'100%'} />} onClick={(e) => onClick(e, onDeleteClick)} />
         </li>
       </ul>
     </li>

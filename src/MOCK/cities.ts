@@ -1,4 +1,4 @@
-import { ICity } from '../interfaces';
+import { ICity } from '../types';
 
 export const mocked_cities: ICity[] = [
   {
