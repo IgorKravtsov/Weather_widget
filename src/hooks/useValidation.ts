@@ -8,6 +8,7 @@ export interface IValidationResult {
   maxError: boolean;
   minError: boolean;
   errorMessage: string;
+  matchesError: boolean;
 }
 
 export const defaultValidations: IValidations = {
@@ -16,6 +17,7 @@ export const defaultValidations: IValidations = {
   errorMessage: '',
   max: Infinity,
   min: -Infinity,
+  matches: '',
 };
 
 export const useValidation = (value: string, comingValidations?: Partial<IValidations>): IValidationResult => {
@@ -28,6 +30,7 @@ export const useValidation = (value: string, comingValidations?: Partial<IValida
   const [maxLengthError, setMaxLengthError] = useState(false);
   const [minError, setMinError] = useState(false);
   const [maxError, setMaxError] = useState(false);
+  const [matchesError, setMatchesError] = useState(false);
 
   useEffect(() => {
     for (const validation in validations) {
@@ -48,6 +51,11 @@ export const useValidation = (value: string, comingValidations?: Partial<IValida
           Number(value) > validations[validation] ? setMaxError(true) : setMaxError(false);
           break;
 
+        case 'matches':
+          const regExp = new RegExp(validations[validation]);
+          setMatchesError(!regExp.test(value));
+          break;
+
         default:
           break;
       }
@@ -60,5 +68,6 @@ export const useValidation = (value: string, comingValidations?: Partial<IValida
     minError,
     maxError,
     errorMessage: validations.errorMessage,
+    matchesError,
   };
 };

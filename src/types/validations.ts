@@ -4,4 +4,5 @@ export interface IValidations {
   min: number;
   max: number;
   errorMessage: string;
+  matches: string;
 }

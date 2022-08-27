@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { Input } from 'components/Input/Input';
 import { Button } from 'components/Button/Button';
+
+import { useInputWithValidation } from 'hooks/useInputWithValidation';
 import { ICityInfoForm } from './interfaces';
-import { useInputWithValidation } from '../../hooks/useInputWithValidation';
 
 interface CityInfoProps {
   handleSubmit: (data: ICityInfoForm) => void;
@@ -14,17 +15,19 @@ interface CityInfoProps {
   onBackClick?: () => void;
 }
 
+const latRegex = '^-?([0-8]?[0-9]|90)(\\.[0-9]{1,10})?$';
+const lonRegex = '^-?([0-9]{1,2}|1[0-7][0-9]|180)(\\.[0-9]{1,10})?$';
+
 const CityInfoForm: React.FC<CityInfoProps> = ({ handleSubmit, initialData, onBackClick }) => {
   const [name, { isValid: isNameValid }] = useInputWithValidation(initialData?.name || '', {
     validations: { minLength: 1 },
   });
   const [lat, { isValid: isLatValid }] = useInputWithValidation(initialData?.lat.toString() || '', {
-    validations: { min: 1 },
+    validations: { matches: latRegex },
   });
   const [lon, { isValid: isLonValid }] = useInputWithValidation(initialData?.lon.toString() || '', {
-    validations: { min: 1 },
+    validations: { matches: lonRegex },
   });
-
   const navigate = useNavigate();
 
   const onSubmit = (e: React.MouseEvent) => {
@@ -47,7 +50,6 @@ const CityInfoForm: React.FC<CityInfoProps> = ({ handleSubmit, initialData, onBa
           {...lat}
           label={'Latitude'}
           type={'number'}
-          min={1}
           wrapperClassName={styles.coordsinput_wrapper}
           className={styles.coordsinput}
           error={!isLatValid ? 'Error' : ''}
@@ -57,7 +59,6 @@ const CityInfoForm: React.FC<CityInfoProps> = ({ handleSubmit, initialData, onBa
           {...lon}
           label={'Longtitude'}
           type={'number'}
-          min={1}
           wrapperClassName={styles.coordsinput_wrapper}
           className={styles.coordsinput}
           error={!isLonValid ? 'Error' : ''}
