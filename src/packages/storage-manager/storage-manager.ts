@@ -13,8 +13,16 @@ class StorageManager implements IStorageManager {
     return localStorageManager.getOne(id);
   }
 
-  save(city: ICity): void {
-    localStorageManager.save(city);
+  deleteOne(id: string): void {
+    return localStorageManager.deleteOne(id);
+  }
+
+  create(city: ICity): void {
+    return localStorageManager.create(city);
+  }
+
+  update(city: ICity): void {
+    return localStorageManager.update(city);
   }
 }
 

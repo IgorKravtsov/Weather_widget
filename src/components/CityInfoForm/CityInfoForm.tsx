@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { Input } from 'components/Input/Input';
 import { Button } from 'components/Button/Button';
 
+import { RouteName } from 'routes';
+
 import { useInputWithValidation } from 'hooks/useInputWithValidation';
 import { ICityInfoForm } from './interfaces';
 
@@ -28,12 +30,14 @@ const CityInfoForm: React.FC<CityInfoProps> = ({ handleSubmit, initialData, onBa
   const [lon, { isValid: isLonValid }] = useInputWithValidation(initialData?.lon.toString() || '', {
     validations: { matches: lonRegex },
   });
+  const isFormValid = isNameValid && isLatValid && isLonValid;
   const navigate = useNavigate();
 
   const onSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (isNameValid && isLatValid && isLonValid) {
+    if (isFormValid) {
       handleSubmit({ name: name.value, lat: Number(lat.value), lon: Number(lon.value) });
+      navigate(RouteName.EnterCity);
     }
   };
 

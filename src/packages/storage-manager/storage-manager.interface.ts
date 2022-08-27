@@ -1,7 +1,9 @@
 import { ICity } from 'types';
 
 export interface IStorageManager {
-  save: (city: ICity) => void;
+  create: (city: ICity) => void;
+  update: (city: ICity) => void;
   getOne: (id: string) => ICity | void;
   getAll: () => ICity[] | void;
+  deleteOne: (id: string) => void;
 }

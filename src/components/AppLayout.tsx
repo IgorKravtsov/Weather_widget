@@ -7,7 +7,7 @@ import { LoadingIndicator } from 'components/LoadingIndicatior/LoadingIndicator'
 import { Layout } from 'components/Layout/Layout';
 
 const EnterCity = React.lazy(() => import('pages/EnterCity/EnterCity'));
-const CreateCity = React.lazy(() => import('pages/CreateCity/CreateCity'));
+const CreateCity = React.lazy(() => import('pages/AddCity/AddCity'));
 const UpdateCity = React.lazy(() => import('pages/UpdateCity/UpdateCity'));
 
 export const AppLayout: React.FC = () => {

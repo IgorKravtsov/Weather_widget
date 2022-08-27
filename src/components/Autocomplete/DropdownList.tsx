@@ -16,7 +16,13 @@ const DropdownList: React.FC<DropdownListProps> = ({ data, onChooseOption, handl
   return (
     <ul className={styles.list} onFocus={() => handleFocus(true)} onBlur={() => handleFocus(false)}>
       {data.map((item) => (
-        <DropdownListItem key={item.label} {...props} item={item} inneroOnClick={onChooseOption} />
+        <DropdownListItem
+          key={item.label}
+          {...props}
+          item={item}
+          inneroOnClick={onChooseOption}
+          handleFocus={handleFocus}
+        />
       ))}
       {actionLinks?.map((link) => (
         <DropdownLinkItem key={link.title} actionLink={link} />

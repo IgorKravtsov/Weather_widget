@@ -12,6 +12,7 @@ interface DropdownListItemProps {
   userClick?: (key: IAutocompleteOption) => void;
   onEditClick?: (item: IAutocompleteOption) => void;
   onDeleteClick?: (item: IAutocompleteOption) => void;
+  handleFocus: (focused: boolean) => void;
 }
 
 export const DropdownListItem: React.FC<DropdownListItemProps> = ({
@@ -20,6 +21,7 @@ export const DropdownListItem: React.FC<DropdownListItemProps> = ({
   userClick,
   onEditClick,
   onDeleteClick,
+  handleFocus,
 }) => {
   const onListClick = userClick ?? inneroOnClick;
   const handleClick = () => {
@@ -35,6 +37,7 @@ export const DropdownListItem: React.FC<DropdownListItemProps> = ({
   const onClick = (e: React.MouseEvent, fn: typeof onEditClick) => {
     e.preventDefault();
     fn && fn(item);
+    handleFocus(false);
   };
 
   return (

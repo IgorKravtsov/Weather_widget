@@ -5,19 +5,26 @@ import { useNavigate } from 'react-router-dom';
 
 import { Search } from '../Search/Search';
 
-import { mocked_cities } from 'MOCK/cities';
 import { Autocomplete, IActionLink, IAutocompleteOption } from 'components/Autocomplete';
 import { RouteName } from 'routes';
 import { ICity } from 'types';
 
+import { storageManager } from 'packages/storage-manager';
+
+import { useAppDispatch, useAppSelector } from 'storage/hooks';
+import { selectCities, setCities } from 'storage/slices';
+
 type ICityOption = ICity & IAutocompleteOption;
 
 export const Dropdown: React.FC = () => {
-  const data = mocked_cities.map((c) => ({ ...c, label: c.name }));
+  const { cities } = useAppSelector(selectCities);
+  const data = cities.map((c) => ({ ...c, label: c.name }));
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const actionLinks: IActionLink[] = [
     {
-      title: 'Create city',
+      title: 'Add city',
       action: () => navigate(RouteName.CityInfo),
     },
   ];
@@ -26,8 +33,9 @@ export const Dropdown: React.FC = () => {
     navigate(`${RouteName.CityInfo}/${city.id}`);
   };
 
-  const handleDelete = () => {
-    console.log('delete');
+  const handleDelete = (city: ICityOption) => {
+    storageManager.deleteOne(city.id);
+    dispatch(setCities(storageManager.getAll() || []));
   };
 
   return (
