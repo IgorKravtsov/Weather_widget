@@ -14,9 +14,10 @@ interface AutocompleteProps {
   className?: string;
   onEditClick?: (...params: any[]) => void;
   onDeleteClick?: (...params: any[]) => void;
+  onChooseOption?: (...params: any[]) => void;
 }
 
-export const Autocomplete: React.FC<AutocompleteProps> = ({ data, className = '', ...props }) => {
+export const Autocomplete: React.FC<AutocompleteProps> = ({ data, className = '', onChooseOption, ...props }) => {
   const ref = useRef<HTMLInputElement | null>(null);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isListFocused, setIsListFocused] = useState(false);
@@ -28,11 +29,15 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({ data, className = ''
   });
   const filtered = data.filter(({ label }) => label.toLowerCase().includes(autocompleteState.value.toLowerCase()));
 
-  const handleChooseOption = useCallback((newVal: IAutocompleteOption) => {
-    setDirectly(newVal.label);
-    ref.current?.focus();
-    setIsInputFocused(false);
-  }, []);
+  const handleChooseOption = useCallback(
+    (newVal: IAutocompleteOption) => {
+      setDirectly(newVal.label);
+      ref.current?.focus();
+      setIsInputFocused(false);
+      onChooseOption && onChooseOption(newVal);
+    },
+    [onChooseOption, setDirectly]
+  );
 
   const handleInputFocus = useCallback((focusVal: boolean) => {
     setTimeout(() => {

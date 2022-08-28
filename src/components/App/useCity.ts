@@ -5,14 +5,13 @@ import { selectCities, setCurrentCity } from 'storage/slices';
 import { useAppDispatch, useAppSelector } from 'storage/hooks';
 import { useCallback } from 'react';
 
-export const useSetCity = () => {
+export const useCity = () => {
   const { cities } = useAppSelector(selectCities);
   const dispatch = useAppDispatch();
 
   const setCurrentCityByCoords = useCallback(
     (coords: ICoords) => {
       const currentCity = cities.find((c) => c.lat === coords.lat && c.lon === coords.lon);
-      console.log('===cities===', cities);
       if (!currentCity) {
         const newCity: ICity = { id: generateRandomId(), name: 'Current city', ...coords };
         // dispatch(setCities([newCity, ...cities]));
@@ -21,7 +20,7 @@ export const useSetCity = () => {
       }
       dispatch(setCurrentCity(currentCity));
     },
-    [cities]
+    [cities, dispatch]
   );
 
   return { setCurrentCityByCoords };

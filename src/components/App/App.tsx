@@ -9,13 +9,13 @@ import { positionManager } from 'packages/position-manager';
 import { useAppDispatch, useAppSelector } from 'storage/hooks';
 import { selectCoords, setCities, setCoords, setCoordsError, warning } from 'storage/slices';
 
-import { useSetCity } from './useSetCity';
+import { useCity } from './useCity';
 
 function App() {
   const dispatch = useAppDispatch();
   const { coords } = useAppSelector(selectCoords);
 
-  const { setCurrentCityByCoords } = useSetCity();
+  const { setCurrentCityByCoords } = useCity();
 
   useEffect(() => {
     const getCoords = async () => {
@@ -38,11 +38,11 @@ function App() {
     };
     dispatch(setCities(storageManager.getAll() || []));
     getCoords();
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     coords && setCurrentCityByCoords(coords);
-  }, [coords]);
+  }, [coords, setCurrentCityByCoords]);
 
   return <AppLayout />;
 }

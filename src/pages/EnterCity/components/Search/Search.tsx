@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from './search.module.scss';
 
+import { ReactComponent as SearchIcon } from 'assets/images/Search.svg';
 import { Button } from 'components/Button/Button';
 
-import { ReactComponent as SearchIcon } from './assets/Search.svg';
+interface SearchProps {
+  onSearchClick?: () => void;
+}
 
-export const Search: React.FC = () => {
+const Search: React.FC<SearchProps> = ({ onSearchClick }) => {
   return (
-    <Button className={styles.btn}>
+    <Button className={styles.btn} onClick={onSearchClick}>
       <SearchIcon />
     </Button>
   );
 };
+
+export default memo(Search);

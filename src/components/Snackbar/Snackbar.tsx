@@ -28,7 +28,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({
   useEffect(() => {
     const timerId = setTimeout(() => onCloseClick && onCloseClick(), ms);
     return () => clearTimeout(timerId);
-  }, []);
+  }, [onCloseClick, ms]);
 
   const additionalOnClick = () => {
     handleAdditionalClick && handleAdditionalClick();

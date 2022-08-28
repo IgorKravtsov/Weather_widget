@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './dropdown.module.scss';
 
 import { useNavigate } from 'react-router-dom';
 
-import { Search } from '../Search/Search';
+import Search from '../Search/Search';
 
 import { Autocomplete, IActionLink, IAutocompleteOption } from 'components/Autocomplete';
 import { RouteName } from 'routes';
@@ -17,14 +17,17 @@ import { useCitiesData } from './useCitiesData';
 
 type ICityOption = ICity & IAutocompleteOption;
 
-export const Dropdown: React.FC = () => {
+interface DropdownProps {
+  onSearchClick?: (cityId: string) => void;
+}
+
+export const Dropdown: React.FC<DropdownProps> = ({ onSearchClick }) => {
   const { cities, currentCity } = useAppSelector(selectCities);
+
+  const [choosedCity, setChoosedCity] = useState<ICity | null>(null);
+
   const currentCityFound = cities.find((c) => c.lat === currentCity?.lat && c.lon === currentCity.lon);
-
   const { data } = useCitiesData(currentCityFound);
-
-  // const data = cities.map((c) => ({ ...c, label: c?.name || '', isSpecial: false }));
-  // currentCity && data.unshift({ ...currentCity, label: currentCity.name, isSpecial: true });
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -45,9 +48,15 @@ export const Dropdown: React.FC = () => {
     dispatch(setCities(storageManager.getAll() || []));
   };
 
-  React.useEffect(() => {
-    console.log('===currentCity===', currentCity);
-  }, [currentCity]);
+  const handleChooseOption = (city: ICityOption) => {
+    setChoosedCity(city);
+  };
+
+  const handleSearchClick = () => {
+    if (choosedCity && onSearchClick) {
+      onSearchClick && onSearchClick(choosedCity.id);
+    }
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -57,8 +66,9 @@ export const Dropdown: React.FC = () => {
         className={styles.dropdown}
         onEditClick={handleEdit}
         onDeleteClick={handleDelete}
+        onChooseOption={handleChooseOption}
       />
-      <Search />
+      <Search onSearchClick={handleSearchClick} />
     </div>
   );
-};
+};;

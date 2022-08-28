@@ -19,15 +19,18 @@ const UpdateCity: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const handleSubmit = useCallback((data: ICityInfoForm) => {
-    const city: ICity = { ...data, id: cityId ?? '' };
-    try {
-      storageManager.update(city);
-      dispatch(setCities(storageManager.getAll() || []));
-    } catch (e) {
-      console.error(e);
-    }
-  }, []);
+  const handleSubmit = useCallback(
+    (data: ICityInfoForm) => {
+      const city: ICity = { ...data, id: cityId ?? '' };
+      try {
+        storageManager.update(city);
+        dispatch(setCities(storageManager.getAll() || []));
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    [cityId, dispatch]
+  );
 
   const initialData = [...cities, currentCity].find((c) => c?.id === cityId);
 
