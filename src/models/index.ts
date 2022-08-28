@@ -1,1 +1,1 @@
-export * from './models';
+export * from './weather.model';
