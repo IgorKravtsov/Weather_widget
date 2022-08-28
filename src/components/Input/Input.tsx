@@ -9,11 +9,16 @@ interface InputProps extends HTMLProps<HTMLInputElement> {
 }
 
 export const Input: React.FC<InputProps> = forwardRef(
-  ({ className, label, error, wrapperClassName, ...props }, ref) => {
+  ({ className, label, error, wrapperClassName, disabled, ...props }, ref) => {
     return (
       <div className={wrapperClassName}>
-        {label && <p className={styles.label}>{label}</p>}
-        <input {...props} ref={ref} className={`${styles.input} ${className} ${error && styles.error_input}`} />
+        {label && <p className={`${styles.label} ${disabled && styles.disabled}`}>{label}</p>}
+        <input
+          {...props}
+          ref={ref}
+          className={`${styles.input} ${className} ${error && styles.error_input} ${disabled && styles.disabled}`}
+          disabled={disabled}
+        />
         {error && <p className={styles.error}>{error}</p>}
       </div>
     );

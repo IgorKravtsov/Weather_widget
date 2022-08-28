@@ -42,7 +42,7 @@ export const DropdownListItem: React.FC<DropdownListItemProps> = ({
 
   return (
     <li
-      className={styles.item}
+      className={[styles.item, item.isSpecial ? styles.special : ''].join(' ')}
       tabIndex={0}
       // onBlur={() => handleFocus(false)}
     >
@@ -50,11 +50,16 @@ export const DropdownListItem: React.FC<DropdownListItemProps> = ({
         {item.label}
       </p>
       <ul className={styles.btnwrapper}>
+        {!item.isSpecial && (
+          <li className={styles.iconbtn}>
+            <IconButton
+              icon={<DeleteIcon width={'100%'} height={'100%'} />}
+              onClick={(e) => onClick(e, onDeleteClick)}
+            />
+          </li>
+        )}
         <li className={styles.iconbtn}>
           <IconButton icon={<EditIcon width={'100%'} height={'100%'} />} onClick={(e) => onClick(e, onEditClick)} />
-        </li>
-        <li className={styles.iconbtn}>
-          <IconButton icon={<DeleteIcon width={'100%'} height={'100%'} />} onClick={(e) => onClick(e, onDeleteClick)} />
         </li>
       </ul>
     </li>

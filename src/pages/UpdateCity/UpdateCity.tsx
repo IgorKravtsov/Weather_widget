@@ -14,7 +14,7 @@ import { selectCities, setCities } from 'storage/slices';
 import { storageManager } from 'packages/storage-manager';
 
 const UpdateCity: React.FC = () => {
-  const { cities } = useAppSelector(selectCities);
+  const { cities, currentCity } = useAppSelector(selectCities);
   const { cityId } = useParams<PageParams>();
 
   const dispatch = useAppDispatch();
@@ -29,7 +29,7 @@ const UpdateCity: React.FC = () => {
     }
   }, []);
 
-  const initialData = cities.find((c) => c.id === cityId);
+  const initialData = [...cities, currentCity].find((c) => c?.id === cityId);
 
   return (
     <>

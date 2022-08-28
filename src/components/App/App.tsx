@@ -6,12 +6,15 @@ import { AppLayout } from 'components/AppLayout';
 import { storageManager } from 'packages/storage-manager';
 import { positionManager } from 'packages/position-manager';
 
-import { useAppDispatch } from 'storage/hooks';
-import { setCities, setCoords, setCoordsError, warning } from 'storage/slices';
+import { useAppDispatch, useAppSelector } from 'storage/hooks';
+import { selectCoords, setCities, setCoords, setCoordsError, warning } from 'storage/slices';
+
 import { useSetCity } from './useSetCity';
 
 function App() {
   const dispatch = useAppDispatch();
+  const { coords } = useAppSelector(selectCoords);
+
   const { setCurrentCityByCoords } = useSetCity();
 
   useEffect(() => {
@@ -20,7 +23,7 @@ function App() {
         const position = await positionManager.getPosition();
         if (position) {
           dispatch(setCoords(position));
-          setCurrentCityByCoords(position);
+          // setCurrentCityByCoords(position);
         }
       } catch (e) {
         dispatch(setCoordsError('User denied Geolocation'));
@@ -36,6 +39,10 @@ function App() {
     dispatch(setCities(storageManager.getAll() || []));
     getCoords();
   }, []);
+
+  useEffect(() => {
+    coords && setCurrentCityByCoords(coords);
+  }, [coords]);
 
   return <AppLayout />;
 }

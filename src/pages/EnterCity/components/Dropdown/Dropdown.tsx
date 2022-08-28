@@ -13,12 +13,19 @@ import { storageManager } from 'packages/storage-manager';
 
 import { useAppDispatch, useAppSelector } from 'storage/hooks';
 import { selectCities, setCities } from 'storage/slices';
+import { useCitiesData } from './useCitiesData';
 
 type ICityOption = ICity & IAutocompleteOption;
 
 export const Dropdown: React.FC = () => {
-  const { cities } = useAppSelector(selectCities);
-  const data = cities.map((c) => ({ ...c, label: c.name }));
+  const { cities, currentCity } = useAppSelector(selectCities);
+  const currentCityFound = cities.find((c) => c.lat === currentCity?.lat && c.lon === currentCity.lon);
+
+  const { data } = useCitiesData(currentCityFound);
+
+  // const data = cities.map((c) => ({ ...c, label: c?.name || '', isSpecial: false }));
+  // currentCity && data.unshift({ ...currentCity, label: currentCity.name, isSpecial: true });
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -37,6 +44,10 @@ export const Dropdown: React.FC = () => {
     storageManager.deleteOne(city.id);
     dispatch(setCities(storageManager.getAll() || []));
   };
+
+  React.useEffect(() => {
+    console.log('===currentCity===', currentCity);
+  }, [currentCity]);
 
   return (
     <div className={styles.wrapper}>

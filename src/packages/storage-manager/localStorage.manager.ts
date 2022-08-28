@@ -40,11 +40,15 @@ export class LocalStorageManager implements IStorageManager {
   update(city: ICity): void {
     const cities = this.getAll();
     const existedCity = cities.find((c) => c.id === city.id);
-    if (!existedCity) {
-      throw Error(`City with name ${city.name} doesn't exists`);
-    }
+    // if (!existedCity) {
+    //   throw Error(`City with name ${city.name} doesn't exists`);
+    // }
 
-    Object.assign(existedCity, city);
+    if (existedCity) {
+      Object.assign(existedCity, city);
+    } else {
+      cities.push(city);
+    }
     localStorage.setItem(LocalstorageKey.cities, JSON.stringify(cities));
   }
 

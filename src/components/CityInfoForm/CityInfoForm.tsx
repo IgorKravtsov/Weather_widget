@@ -11,10 +11,12 @@ import { RouteName } from 'routes';
 import { useInputWithValidation } from 'hooks/useInputWithValidation';
 import { ICityInfoForm } from './interfaces';
 import { useCityFormValidation } from './useCityFormValidation';
+import { useAppSelector } from '../../storage/hooks';
+import { selectCities } from '../../storage/slices';
 
 interface CityInfoProps {
   handleSubmit: (data: ICityInfoForm) => void;
-  initialData?: ICityInfoForm;
+  initialData?: ICityInfoForm | null;
   onBackClick?: () => void;
 }
 
@@ -22,6 +24,9 @@ const latRegex = '^-?([0-8]?[0-9]|90)(\\.[0-9]{1,10})?$';
 const lonRegex = '^-?([0-9]{1,2}|1[0-7][0-9]|180)(\\.[0-9]{1,10})?$';
 
 const CityInfoForm: React.FC<CityInfoProps> = ({ handleSubmit, initialData, onBackClick }) => {
+  const { currentCity } = useAppSelector(selectCities);
+  const isEditCurrent = currentCity?.lat === initialData?.lat && currentCity?.lon === initialData?.lon;
+
   const [name, { isValid: isNameValid }] = useInputWithValidation(initialData?.name || '', {
     validations: { minLength: 1 },
   });
@@ -68,6 +73,7 @@ const CityInfoForm: React.FC<CityInfoProps> = ({ handleSubmit, initialData, onBa
           className={styles.coordsinput}
           error={isSubmitted && !isLatValid ? matchesErr('Field', 'has to be a valid lat') : ''}
           required
+          disabled={isEditCurrent}
         />
         <Input
           {...lon}
@@ -77,6 +83,7 @@ const CityInfoForm: React.FC<CityInfoProps> = ({ handleSubmit, initialData, onBa
           className={styles.coordsinput}
           error={isSubmitted && !isLonValid ? matchesErr('Field', 'has to be a valid lon') : ''}
           required
+          disabled={isEditCurrent}
         />
       </div>
       <div className={styles.btnwrapper}>
