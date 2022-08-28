@@ -1,6 +1,6 @@
 # Task
 
-Weather Widget(Виджет Погоды)
+## Weather Widget(Виджет Погоды)
 
 Необходимо разработать одностраничное погодное приложение. Данные для отображения можно взять
 с https://fcc-weather-api.glitch.me/api/current?lat=48&lon=31 или любого другого открытого API.
@@ -14,10 +14,6 @@ Weather Widget(Виджет Погоды)
 readme файлом с описанием requirements + процесс сборки и запуска приложения.
 
 Будет плюсом: покрытие кода тестами.
-
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
