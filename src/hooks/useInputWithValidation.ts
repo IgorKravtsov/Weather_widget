@@ -14,7 +14,7 @@ export const useInputWithValidation = (
   const [inputState, inputAdditionalState] = useInput(initialValue, config);
   const { errorMessage, ...validationErrors } = useValidation(inputState.value, config?.validations);
   const isValid = useMemo(() => {
-    if (!inputAdditionalState.isDirty) return true;
+    // if (!inputAdditionalState.isDirty) return true;
     return Object.values(validationErrors).every((err) => !err);
   }, [validationErrors]);
 

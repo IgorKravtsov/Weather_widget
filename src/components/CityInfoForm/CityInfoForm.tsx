@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import styles from './city-info.module.scss';
 
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { RouteName } from 'routes';
 
 import { useInputWithValidation } from 'hooks/useInputWithValidation';
 import { ICityInfoForm } from './interfaces';
+import { useCityFormValidation } from './useCityFormValidation';
 
 interface CityInfoProps {
   handleSubmit: (data: ICityInfoForm) => void;
@@ -30,11 +31,14 @@ const CityInfoForm: React.FC<CityInfoProps> = ({ handleSubmit, initialData, onBa
   const [lon, { isValid: isLonValid }] = useInputWithValidation(initialData?.lon.toString() || '', {
     validations: { matches: lonRegex },
   });
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const isFormValid = isNameValid && isLatValid && isLonValid;
   const navigate = useNavigate();
+  const { minLengthErr, matchesErr } = useCityFormValidation();
 
   const onSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
+    setIsSubmitted(true);
     if (isFormValid) {
       handleSubmit({ name: name.value, lat: Number(lat.value), lon: Number(lon.value) });
       navigate(RouteName.EnterCity);
@@ -48,7 +52,13 @@ const CityInfoForm: React.FC<CityInfoProps> = ({ handleSubmit, initialData, onBa
 
   return (
     <form>
-      <Input {...name} className={styles.nameinput} label={'City name'} error={!isNameValid ? 'Error' : ''} required />
+      <Input
+        {...name}
+        className={styles.nameinput}
+        label={'City name'}
+        error={isSubmitted && !isNameValid ? minLengthErr('City name', 1) : ''}
+        required
+      />
       <div className={styles.flexwrapper}>
         <Input
           {...lat}
@@ -56,7 +66,7 @@ const CityInfoForm: React.FC<CityInfoProps> = ({ handleSubmit, initialData, onBa
           type={'number'}
           wrapperClassName={styles.coordsinput_wrapper}
           className={styles.coordsinput}
-          error={!isLatValid ? 'Error' : ''}
+          error={isSubmitted && !isLatValid ? matchesErr('Field', 'has to be a valid lat') : ''}
           required
         />
         <Input
@@ -65,7 +75,7 @@ const CityInfoForm: React.FC<CityInfoProps> = ({ handleSubmit, initialData, onBa
           type={'number'}
           wrapperClassName={styles.coordsinput_wrapper}
           className={styles.coordsinput}
-          error={!isLonValid ? 'Error' : ''}
+          error={isSubmitted && !isLonValid ? matchesErr('Field', 'has to be a valid lon') : ''}
           required
         />
       </div>
