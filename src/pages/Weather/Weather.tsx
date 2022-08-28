@@ -29,7 +29,8 @@ const Weather: React.FC = () => {
 
   useEffect(() => {
     if (currentCity && currentCity.id === cityId) {
-      getCurrentWeather({ lat: currentCity.lat, lon: currentCity.lon });
+      const { lat, lon } = currentCity;
+      getCurrentWeather({ lat, lon });
     } else if (cityId) {
       const currCity = storageManager.getOne(cityId);
       if (currCity) {
