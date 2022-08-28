@@ -44,16 +44,8 @@ const Weather: React.FC = () => {
     }
   }, [cityId, dispatch, getCurrentWeather, currentCity, navigate]);
 
-  React.useEffect(() => {
-    console.log('===data===', data);
-  }, [data]);
-
   if (isLoading) {
-    return (
-      <WeatherCard>
-        <LoadingIndicator />
-      </WeatherCard>
-    );
+    return <LoadingIndicator />;
   }
 
   return (
@@ -63,8 +55,6 @@ const Weather: React.FC = () => {
         <CityName cityName={currCity?.name || currentCity?.name || '-'} />
         <WeatherType weatherType={data?.weather[0].main || 'Clear'} temp={data?.main.temp || 0} />
         <WeatherFooter feelsLike={data?.main.feels_like || 0} humidity={data?.main.humidity || 0} />
-        {/*<Title>Weather {cityId}</Title>*/}
-        {/*{data?.weather[0].main}*/}
       </WeatherCard>
     </>
   );
