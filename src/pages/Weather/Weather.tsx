@@ -41,7 +41,7 @@ const Weather: React.FC = () => {
         navigate(RouteName.EnterCity);
       }
     }
-  }, [cityId, dispatch, getCurrentWeather]);
+  }, [cityId, dispatch, getCurrentWeather, currentCity, navigate]);
 
   React.useEffect(() => {
     console.log('===data===', data);
