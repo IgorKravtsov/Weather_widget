@@ -1,8 +1,8 @@
 import { Action, combineReducers, configureStore, ThunkAction } from '@reduxjs/toolkit';
-import { cities } from './slices/cites.slice';
+import { cities, coords } from './slices';
 
 export const store = configureStore({
-  reducer: combineReducers({ cities }),
+  reducer: combineReducers({ cities, coords }),
 });
 
 export type AppDispatch = typeof store.dispatch;
