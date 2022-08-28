@@ -8,15 +8,20 @@ import { positionManager } from 'packages/position-manager';
 
 import { useAppDispatch } from 'storage/hooks';
 import { setCities, setCoords, setCoordsError, warning } from 'storage/slices';
+import { useSetCity } from './useSetCity';
 
 function App() {
   const dispatch = useAppDispatch();
+  const { setCurrentCityByCoords } = useSetCity();
 
   useEffect(() => {
     const getCoords = async () => {
       try {
         const position = await positionManager.getPosition();
-        position && dispatch(setCoords(position));
+        if (position) {
+          dispatch(setCoords(position));
+          setCurrentCityByCoords(position);
+        }
       } catch (e) {
         dispatch(setCoordsError('User denied Geolocation'));
         storageManager.getShowFlag() &&

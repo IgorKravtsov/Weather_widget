@@ -4,10 +4,12 @@ import { RootState } from '../store';
 
 interface CitiesState {
   cities: ICity[];
+  currentCity: ICity | null;
 }
 
 const initialState: CitiesState = {
   cities: [],
+  currentCity: null,
 };
 
 const citiesSlice = createSlice({
@@ -17,9 +19,12 @@ const citiesSlice = createSlice({
     setCities(state, action: PayloadAction<ICity[]>) {
       state.cities = action.payload;
     },
+    setCurrentCity(state, action: PayloadAction<ICity>) {
+      state.currentCity = action.payload;
+    },
   },
 });
 
-export const { setCities } = citiesSlice.actions;
+export const { setCities, setCurrentCity } = citiesSlice.actions;
 export const cities = citiesSlice.reducer;
 export const selectCities = (state: RootState) => state.cities;
