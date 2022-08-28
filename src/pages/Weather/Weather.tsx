@@ -25,18 +25,18 @@ const Weather: React.FC = () => {
   const navigate = useNavigate();
 
   const [currCity, setCurrCity] = useState<ICity | null>(null);
-  const [getCurrentWeather, { data, isLoading }] = useLazyCurrentCityWeatherQuery();
+  const [getCurrentWeather, { data, isLoading, isError }] = useLazyCurrentCityWeatherQuery();
 
   useEffect(() => {
     if (currentCity && currentCity.id === cityId) {
       const { lat, lon } = currentCity;
       getCurrentWeather({ lat, lon });
     } else if (cityId) {
-      const currCity = storageManager.getOne(cityId);
-      if (currCity) {
-        const { lat, lon } = currCity;
+      const nowCity = storageManager.getOne(cityId);
+      if (nowCity) {
+        const { lat, lon } = nowCity;
         getCurrentWeather({ lat, lon });
-        setCurrCity(currCity);
+        setCurrCity(nowCity);
       } else {
         dispatch(error({ message: "Such city doesn't exist in list" }));
         navigate(RouteName.EnterCity);
@@ -46,6 +46,11 @@ const Weather: React.FC = () => {
 
   if (isLoading) {
     return <LoadingIndicator />;
+  }
+
+  if (isError) {
+    dispatch(error({ message: 'Some error occured' }));
+    navigate(RouteName.EnterCity);
   }
 
   return (
