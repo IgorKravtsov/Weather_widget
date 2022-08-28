@@ -6,8 +6,8 @@ import { AppLayout } from 'components/AppLayout';
 import { storageManager } from 'packages/storage-manager';
 import { positionManager } from 'packages/position-manager';
 
-import { useAppDispatch, useAppSelector } from 'storage/hooks';
-import { selectCoords, setCities, setCoords, setCoordsError, warning } from 'storage/slices';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
+import { selectCoords, setCities, setCoords, setCoordsError, warning } from 'store/slices';
 
 import { useCity } from './useCity';
 

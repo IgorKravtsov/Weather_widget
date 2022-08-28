@@ -8,8 +8,8 @@ import { ICityInfoForm } from 'components/CityInfoForm';
 import { ICity } from 'types';
 import { PageParams } from 'types/page-params';
 
-import { useAppDispatch, useAppSelector } from 'storage/hooks';
-import { selectCities, setCities } from 'storage/slices';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
+import { selectCities, setCities } from 'store/slices';
 
 import { storageManager } from 'packages/storage-manager';
 

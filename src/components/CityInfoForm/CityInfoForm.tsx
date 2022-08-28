@@ -11,8 +11,8 @@ import { RouteName } from 'routes';
 import { useInputWithValidation } from 'hooks/useInputWithValidation';
 import { ICityInfoForm } from './interfaces';
 import { useCityFormValidation } from './useCityFormValidation';
-import { useAppSelector } from '../../storage/hooks';
-import { selectCities } from '../../storage/slices';
+import { useAppSelector } from '../../store/hooks';
+import { selectCities } from '../../store/slices';
 
 interface CityInfoProps {
   handleSubmit: (data: ICityInfoForm) => void;

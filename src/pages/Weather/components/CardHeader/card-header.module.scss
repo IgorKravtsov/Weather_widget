@@ -1,0 +1,17 @@
+.wrapper {
+  position: relative;
+  padding: 20px 0;
+  display: flex;
+}
+
+.icon {
+  position: absolute;
+  top: 2px;
+  left: .1vw;
+  width: fit-content !important;
+  margin-left: 30px !important;
+}
+
+.title {
+  margin: 0 auto;
+}

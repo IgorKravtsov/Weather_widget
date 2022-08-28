@@ -1,8 +1,8 @@
 import { ICity, ICoords } from 'types';
 import { generateRandomId } from 'utils';
 
-import { selectCities, setCurrentCity } from 'storage/slices';
-import { useAppDispatch, useAppSelector } from 'storage/hooks';
+import { selectCities, setCurrentCity } from 'store/slices';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { useCallback } from 'react';
 
 export const useCity = () => {

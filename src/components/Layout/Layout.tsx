@@ -5,8 +5,8 @@ import { HtmlID } from 'enums';
 
 import { storageManager } from 'packages/storage-manager';
 
-import { useAppDispatch, useAppSelector } from 'storage/hooks';
-import { clear, selectSnackbar } from 'storage/slices';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
+import { clear, selectSnackbar } from 'store/slices';
 
 import { Snackbar } from 'components/Snackbar/Snackbar';
 

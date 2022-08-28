@@ -1,8 +1,8 @@
 import { ICity } from 'types';
 import { IAutocompleteOption } from 'components/Autocomplete';
 
-import { useAppSelector } from 'storage/hooks';
-import { selectCities } from 'storage/slices';
+import { useAppSelector } from 'store/hooks';
+import { selectCities } from 'store/slices';
 
 export const useCitiesData = (currentCityFound?: ICity) => {
   const { cities, currentCity: currentCityInStorage } = useAppSelector(selectCities);

@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  border-top: 2px solid rgba(209, 199, 207, 0.69);
+  background-color: var(--secondary-text-color);
+  flex: 1;
+  height: 100%;
+  width: 100%;
+}
+
+.right {
+  border-bottom-right-radius: 15px;
+  border-left: 1px solid rgba(209, 199, 207, 0.69);
+}
+
+.left {
+  border-bottom-left-radius: 15px;
+  border-right: 1px solid rgba(209, 199, 207, 0.69);
+}

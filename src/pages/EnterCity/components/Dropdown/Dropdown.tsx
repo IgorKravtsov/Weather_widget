@@ -11,8 +11,8 @@ import { ICity } from 'types';
 
 import { storageManager } from 'packages/storage-manager';
 
-import { useAppDispatch, useAppSelector } from 'storage/hooks';
-import { selectCities, setCities } from 'storage/slices';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
+import { selectCities, setCities } from 'store/slices';
 import { useCitiesData } from './useCitiesData';
 
 type ICityOption = ICity & IAutocompleteOption;
@@ -71,4 +71,4 @@ export const Dropdown: React.FC<DropdownProps> = ({ onSearchClick }) => {
       <Search onSearchClick={handleSearchClick} />
     </div>
   );
-};;
+};
