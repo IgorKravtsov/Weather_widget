@@ -4,10 +4,10 @@ import './App.css';
 import { AppLayout } from 'components/AppLayout';
 
 import { storageManager } from 'packages/storage-manager';
-import { postitionManager } from 'packages/position-manager';
+import { positionManager } from 'packages/position-manager';
 
 import { useAppDispatch } from 'storage/hooks';
-import { setCities, setCoords, setCoordsError } from 'storage/slices';
+import { setCities, setCoords, setCoordsError, warning } from 'storage/slices';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -15,10 +15,17 @@ function App() {
   useEffect(() => {
     const getCoords = async () => {
       try {
-        const position = await postitionManager.getPosition();
+        const position = await positionManager.getPosition();
         position && dispatch(setCoords(position));
       } catch (e) {
         dispatch(setCoordsError('User denied Geolocation'));
+        storageManager.getShowFlag() &&
+          dispatch(
+            warning({
+              message: 'You denied geoposition, please enable it in browser settings',
+              additionalBtnLabel: "Don't show",
+            })
+          );
       }
     };
     dispatch(setCities(storageManager.getAll() || []));

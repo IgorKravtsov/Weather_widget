@@ -3,9 +3,19 @@ import { ICity } from 'types';
 
 enum LocalstorageKey {
   cities = 'weather_cities',
+  showFlag = 'weather_show_flag',
 }
 
 export class LocalStorageManager implements IStorageManager {
+  setShowFlag(isShow: boolean) {
+    localStorage.setItem(LocalstorageKey.showFlag, JSON.stringify(isShow));
+  }
+
+  getShowFlag(): boolean {
+    const isShow = localStorage.getItem(LocalstorageKey.showFlag);
+    return JSON.parse(isShow || 'true');
+  }
+
   getAll() {
     const localStorageCities = localStorage.getItem(LocalstorageKey.cities);
     const cities: ICity[] = JSON.parse(localStorageCities || '[]');

@@ -6,4 +6,6 @@ export interface IStorageManager {
   getOne: (id: string) => ICity | void;
   getAll: () => ICity[] | void;
   deleteOne: (id: string) => void;
+  setShowFlag: (isShow: boolean) => void;
+  getShowFlag: () => boolean;
 }

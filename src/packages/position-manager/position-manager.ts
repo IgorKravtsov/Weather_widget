@@ -1,4 +1,4 @@
 import { NavigatorManager } from './navigator.manager';
 import { IPositionManager } from './position-manager.interface';
 
-export const postitionManager: IPositionManager = new NavigatorManager();
+export const positionManager: IPositionManager = new NavigatorManager();
